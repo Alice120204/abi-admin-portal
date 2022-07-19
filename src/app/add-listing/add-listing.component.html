@@ -1,0 +1,99 @@
+<div class="add-listing-window">
+  <h2 mat-dialog-title><b>Add New Job Listing</b></h2>
+  <mat-tab-group >
+    <mat-tab label="General Information">
+      <br>
+      <div class="form-fields" mat-dialog-content>
+        <form [formGroup]="addListingForm">
+          <mat-form-field>
+            <mat-label>Listing Title</mat-label>
+            <input type="text" matInput formControlName="listingTitle" [formControl]="listingTitle">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Job Title</mat-label>
+            <input type="text" matInput formControlName="jobTitle" [formControl]="jobTitle">
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea name="" id="" cols="100" rows="10" matInput formControlName="description" [formControl]="description"></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Employer</mat-label>
+            <input type="text" matInput formControlName="employer" [formControl]="employer">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Duration</mat-label>
+            <input type="text" matInput formControlName="duration" [formControl]="duration">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Format</mat-label>
+            <input type="text" matInput formControlName="format" [formControl]="format">
+          </mat-form-field>
+          <!--datepicker-->
+          <mat-form-field>
+            <mat-label>Application Deadline</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="appDeadline" [formControl]="appDeadline">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Working Hours</mat-label>
+            <input type="text" matInput formControlName="workingHours" [formControl]="workingHours">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Remuneration</mat-label>
+            <input type="text" matInput formControlName="remuneration" [formControl]="remuneration">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Image URL</mat-label>
+            <input type="text" matInput formControlName="imageUrl" [formControl]="imageUrl">
+          </mat-form-field>
+        </form>
+      </div>
+    </mat-tab>
+    <mat-tab label="Qualifications">
+      <div class="qualifications-section">
+        <form [formGroup]="qualificationsForm">
+          <div class="row-1" style="display: flex;">
+            <br>
+            <br>
+            <button mat-stroked-button style="margin-bottom: 3px; margin-top: 10px; width: 100%;" (click)="addQualFormField()" color="primary">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div class="writeQualifications" formArrayName="qualifications"  *ngFor="let quals of this.qualificationsForm.controls['qualifications']?.value; let i = index; trackBy: trackByIndex"  >
+            <!--սա պետք ա լինի Object ոչ թե Array, q_01 key-երով, գեներացնելու ձև մտածել, կամ էլ հենց բուն դբ մտցնելուց key-եր գեներացնել էն անգամվա նման-->
+            <mat-form-field appearance="outline"  formGroupName="{{i}}">
+              <mat-label>Qualification {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="newQualification" name="newQualification" [formControl]="newQualification">
+            </mat-form-field>
+          </div>
+        </form>
+        <button (click)="appendQualification()" mat-stroked-button *ngIf="showButton" color="accent">DONE</button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Tasks">
+      <div class="tasks-section">
+        <form action="" [formGroup]="tasksForm">
+          <div class="row-1" style="display: flex;">
+            <button mat-stroked-button style="margin-bottom: 3px; margin-top: 10px; width: 100%;" (click)="addTaskFormField()" color="primary">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div formArrayName="tasks" *ngFor="let tasks of this.tasksForm.controls['tasks']?.value; let i = index; trackBy: trackByIndex">
+            <mat-form-field appearance="outline" formGroupName="{{i}}">
+              <mat-label>Task {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="newTask" name="newTask" [formControl]="newTask">
+            </mat-form-field>
+          </div>
+        </form>
+        <button (click)="appendTask()" mat-raised-button *ngIf="showTaskButton" color="accent">DONE</button>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <div class="action-buttons" mat-dialog-actions>
+    <button mat-raised-button color="primary" style="left: 500px" [disabled]="!enableAdd" (click)="addListingtoDB()">Add</button>
+  </div>
+</div>

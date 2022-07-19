@@ -1,0 +1,54 @@
+<div class="main">
+  <div class="headings" style="display: flex;">
+    <h1><b>{{jobTitle}} applications</b></h1>
+    <div class="export-buttons" style="display: flex; right: 9%; position: absolute;">
+      <button mat-icon-button color="primary" (click)="export()" class="export" matTooltip="Export entire list to Excel">
+        <mat-icon>file_download</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="exportShortList()" style=" color: #ffde6d; " matTooltip="Export shortlist to Excel">
+        <mat-icon>dataset</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="wrapper" *ngIf="displayMessage==false">
+    <ng-container *ngFor="let candidate of finalData; index as i">
+      <mat-card  class="card-container" [ngClass]="{shortlist:candidate.isShortListed==true, rejected:candidate.isRejected==true}">
+        <mat-card-header>
+            <mat-card-title>{{candidate.Name}}</mat-card-title>
+          <mat-card-subtitle>{{candidate.Affiliation}}</mat-card-subtitle>
+        </mat-card-header>
+        <div class="spacer"></div>
+        <div class="action-buttons" style="display: flex; justify-content: center">
+          <button mat-icon-button (click)="openApplication(i)" class="viewButton" matTooltip="View full application">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button style="color: #00BFA5;" (click)="shortlist(i)" *ngIf="candidate.isShortListed==undefined || candidate.isShortListed==false" matTooltip="Mark candidate as shortlisted">
+            <mat-icon>done_all</mat-icon>
+          </button>
+          <button mat-icon-button style="color: rgb(226,149,157);" (click)="removeFromShortList(i)" *ngIf="candidate.isShortListed==true" matTooltip="Remove candidate from shortlist">
+            <mat-icon>remove_done</mat-icon>
+          </button>
+
+          <button mat-icon-button style="color: rgb(124,31,38);" (click)="reject(i)" *ngIf="candidate.isRejected==undefined || candidate.isRejected==false" matTooltip="Reject candidate">
+            <mat-icon>thumb_down_alt</mat-icon>
+          </button>
+          <button mat-icon-button style="color: rgb(0,0,0);" (click)="reverseReject(i)" *ngIf="candidate.isRejected==true" matTooltip="Revert candidate rejection">
+            <mat-icon>history</mat-icon>
+          </button>
+          <button mat-icon-button style="color: rgb(124,122,122);" (click)="openComments(i)" *ngIf="candidate.z_Comment==undefined" matTooltip="Add a comment about the candidate">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button  style="color: rgb(124,122,122);" (click)="openComments(i)" *ngIf="candidate.z_Comment!=undefined" matTooltip="View comments about the candidate">
+            <mat-icon>chat</mat-icon>
+          </button>
+        </div>
+
+      </mat-card>
+    </ng-container>
+  </div>
+  <div class="message" *ngIf="displayMessage==true">
+    <p style="text-align: center; margin-top: 10%">There are no applications for this listing yet.</p>
+  </div>
+</div>

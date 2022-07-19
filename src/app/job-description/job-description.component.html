@@ -1,0 +1,87 @@
+<div class="fixActionRow">
+<h1 mat-dialog-title><b>Edit Job Details</b></h1>
+<mat-divider></mat-divider>
+<br>
+<div mat-dialog-content>
+  <h3><b>General Information</b></h3>
+    <mat-form-field>
+      <mat-label>Job Title</mat-label>
+      <input type="text" matInput value="{{data.jobTitle}}" [(ngModel)]="data.jobTitle">
+    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Listing Title</mat-label>
+    <input type="text" matInput value="{{data.listingTitle}}" [(ngModel)]="data.listingTitle">
+  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Job Description</mat-label>
+      <textarea name="" id="" cols="30" rows="8" matInput value="{{data.description}}" [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+  <br>
+  <h3><b>Description</b></h3>
+  <mat-form-field>
+    <mat-label>Application Status</mat-label>
+    <input type="text" matInput value="{{data.wStatus}}" [(ngModel)]="data.wStatus">
+  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Employer</mat-label>
+      <input type="text" matInput value="{{data.employer}}" [(ngModel)]="data.employer">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Duration</mat-label>
+      <input type="text" matInput value="{{data.duration}}" [(ngModel)]="data.duration">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Format</mat-label>
+      <input type="text" matInput value="{{data.format}}" [(ngModel)]="data.format">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Working Hours</mat-label>
+      <input type="text" matInput value="{{data.wHours}}" [(ngModel)]="data.wHours">
+    </mat-form-field>
+    <mat-form-field *ngIf="data.renumeration!='N/A'">
+      <mat-label>Remuneration</mat-label>
+      <input type="text" matInput value="{{data.renumeration}}" [(ngModel)]="data.renumeration">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Application Deadline</mat-label>
+      <input type="text" matInput value="{{data.appDeadline}}" [(ngModel)]="data.appDeadline">
+    </mat-form-field>
+  <br>
+  <div class="tasks-box" *ngIf="data.tasks != ''">
+    <h3><b>Tasks</b></h3>
+      <mat-form-field *ngFor="let task of taskList; let i = index; trackBy:trackByIndex;">
+        <input type="text" matInput value="{{task}}" [(ngModel)]="taskList[i]">
+      </mat-form-field>
+
+  </div>
+  <br>
+    <h3><b>Qualifications</b></h3>
+
+  <mat-form-field *ngFor="let qualification of qualList; let i = index; trackBy:trackByIndex;">
+    <input type="text" matInput value="{{qualification}}" [(ngModel)]="qualList[i]">
+  </mat-form-field>
+  <br>
+  <div class="what-we-offer">
+    <h3><b>What we Offer</b></h3>
+    <mat-form-field *ngFor="let offering of offerings; let i = index; trackBy: trackByIndex">
+      <input type="text" matInput value="{{offering}}" [(ngModel)]="offerings[i]">
+    </mat-form-field>
+  </div>
+
+  <mat-form-field>
+    <mat-label>About ABI</mat-label>
+    <textarea  matInput name="" id="" cols="30" rows="10" [(ngModel)]="aboutABI" value="{{aboutABI}}"></textarea>
+  </mat-form-field>
+ <br>
+  <div class="about-agenus" *ngIf="data.listingTitle=='Systems Biology of Tumor Metastases'">
+    <mat-form-field>
+      <mat-label>About Agenus</mat-label>
+      <textarea name="" id="" cols="30" rows="10" matInput value="{{aboutAgenus}}" [(ngModel)]="aboutAgenus"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+  <div class="spacer"></div>
+<div mat-dialog-actions>
+  <button (click)="saveChanges()" mat-raised-button color="primary">SAVE CHANGES</button>
+</div>
+</div>

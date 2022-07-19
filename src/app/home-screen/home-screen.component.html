@@ -1,0 +1,144 @@
+<title>ABI Application Portal</title>
+<div class="headings">
+  <br>
+  <br>
+  <div class="head-and-button" style="display: flex; justify-content: center;">
+    <h1 class="welcome">ABI PORTAL ADMIN PANEL</h1>
+    <button mat-stroked-button color="primary" (click)="this.router.navigate(['/candidates'])" style="position: absolute; right: 5%;">CANDIDATES</button>
+  </div>
+
+  <div class="container">
+    <button mat-raised-button color="primary" class="vertical-center" (click)="addListing()">ADD LISTING</button>
+  </div>
+  <div class="add-listing-window" *ngIf="addIsClicked">
+    <h2><b>New Listing Information</b></h2>
+    <div class="form-fields">
+      <form [formGroup]="addListingForm">
+        <mat-form-field>
+          <mat-label>Listing Title</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Job Title</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea name="" id="" cols="30" rows="10" matInput></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Employer</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Duration</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Format</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <!--datepicker-->
+        <mat-form-field>
+          <mat-label>Application Deadline</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="appDeadline" [formControl]="appDeadline">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Working Hours</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Remuneration</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Image URL</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+        <!--<mat-form-field>-->
+        <!--<mat-label>Description</mat-label>-->
+        <!--<textarea name="" id="" cols="30" rows="10" matInput></textarea>-->
+        <!--</mat-form-field>-->
+      </form>
+    </div>
+    <div class="nested-items">
+      <div class="qualifications-section">
+        <form [formGroup]="qualificationsForm">
+          <div class="row-1" style="display: flex;">
+            <h3>Qualifications</h3>
+            <button mat-icon-button style="margin-bottom: 3px" (click)="addQualFormField()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div class="writeQualifications" formArrayName="qualifications"  *ngFor="let quals of this.qualificationsForm.controls['qualifications']?.value; let i = index; trackBy: trackByIndex"  >
+            <!--սա պետք ա լինի Object ոչ թե Array, q_01 key-երով, գեներացնելու ձև մտածել, կամ էլ հենց բուն դբ մտցնելուց key-եր գեներացնել էն անգամվա նման-->
+            <mat-form-field appearance="outline"  formGroupName="{{i}}">
+              <mat-label>Qualification {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="newQualification" name="newQualification" [formControl]="newQualification">
+            </mat-form-field>
+          </div>
+        </form>
+        <button (click)="appendQualification()" mat-raised-button *ngIf="showButton">ADD QUALIFICATIONS</button>
+      </div>
+      <div class="tasks-section">
+        <form action="" [formGroup]="tasksForm">
+          <div class="row-1" style="display: flex;">
+            <h3>Tasks</h3>
+            <button mat-icon-button style="margin-bottom: 3px" (click)="addTaskFormField()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <div formArrayName="tasks" *ngFor="let tasks of this.tasksForm.controls['tasks']?.value; let i = index; trackBy: trackByIndex">
+            <mat-form-field appearance="outline" formGroupName="{{i}}">
+              <mat-label>Task {{i+1}}</mat-label>
+              <input type="text" matInput formControlName="newTask" name="newTask" [formControl]="newTask">
+            </mat-form-field>
+          </div>
+        </form>
+        <button (click)="appendTask()" mat-raised-button *ngIf="showTaskButton">ADD TASKS</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<br>
+<div class="cards-container" id="row-1">
+  <div class="ind-card-container"  *ngFor="let listing of openPositions; index as i">
+    <mat-card class="listing-card" *ngIf="listing.w_Visible && i<4" [ngClass]="{'no-margin': listing.w_Visible == true}">
+      <img mat-card-image src="{{listing.w_Image}}" width="282px" height="188px">
+      <div class="card-header">
+        <mat-card-header>
+          <mat-card-title>{{listing.jobTitle}}</mat-card-title>
+          <mat-card-subtitle>{{listing.listingTitle}}</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <mat-card-content class="card-content">
+        <div class="action-buttons">
+          <button mat-stroked-button color ="primary" style="margin-right: 10px" (click)="openDialog(i)">EDIT</button>
+          <button mat-stroked-button color="warn" (click)="removeListing(i)">REMOVE</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div class="cards-container">
+  <div class="ind-card-container"  *ngFor="let listing of openPositions.slice(4); index as i">
+    <mat-card class="listing-card" *ngIf="listing.w_Visible && i<4" [ngClass]="{'no-margin': listing.w_Visible == true}">
+      <img mat-card-image src="{{listing.w_Image}}" width="282px" height="188px">
+      <div class="card-header">
+        <mat-card-header>
+          <mat-card-title>{{listing.jobTitle}}</mat-card-title>
+          <mat-card-subtitle>{{listing.listingTitle}}</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <mat-card-content class="card-content">
+        <div class="action-buttons">
+          <button mat-stroked-button color ="primary" style="margin-right: 10px" (click)="openDialog(i)">EDIT</button>
+          <button mat-stroked-button color="warn" (click)="removeListing(i)">REMOVE</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

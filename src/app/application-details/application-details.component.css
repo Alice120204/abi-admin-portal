@@ -1,0 +1,16 @@
+.action-button button{
+  background-color: #BBDEFB;
+  color: black;
+}
+.action-button{
+  text-align: center;
+  margin-right: 20px;
+}
+.buttons{
+  display: flex;
+  max-width: 90%;
+  justify-content: center;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  margin-left: 4%;
+}

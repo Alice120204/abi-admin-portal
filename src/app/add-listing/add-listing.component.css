@@ -1,0 +1,27 @@
+.add-listing-window{
+  padding: 15px;
+}
+.form-fields{
+  display: flex;
+}
+.form-fields mat-form-field{
+  margin-right: 10px;
+}
+/*.mat-icon{*/
+  /*margin-bottom: 15px !important;*/
+/*}*/
+.mat-card-image {
+  margin-top: 0px !important;
+}
+.nested-items{
+  display: flex;
+}
+.qualifications-section {
+  margin-right: 20px;
+}
+.mat-form-field-infix {
+  width: 500px !important;
+}
+.mat-tab-body-content{
+  overflow:  hidden !important;
+}

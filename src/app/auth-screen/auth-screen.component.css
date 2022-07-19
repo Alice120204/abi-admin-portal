@@ -1,0 +1,19 @@
+body{
+  text-align: center;
+}
+.form-box{
+  width: 250px;
+  height: fit-content;
+  border-radius: 20px;
+  border: 1px solid #ababab;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /*margin: 0 auto;*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}

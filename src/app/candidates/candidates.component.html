@@ -1,0 +1,64 @@
+<h1>Dashboard</h1>
+<div class="candidates-box">
+<!--<div *ngFor="let listing of openPositions; index as i" class="mini-listing-card">-->
+  <!--<h2>-->
+      <!--{{listing.jobTitle}}-->
+  <!--</h2>-->
+  <!--<h3 style="color: #838383">{{listing.listingTitle}}</h3>-->
+  <!--<p style="color: gray;"><i>Number of applications: {{applicantNumber[i]}}</i></p>-->
+  <!--<button mat-stroked-button (click)="openCandidateList(i)">VIEW CANDIDATES</button>-->
+<!--</div>-->
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+         class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header sortActionDescription="Sort by Number">
+        ID
+      </th>
+      <td mat-cell style="color: #525252" *matCellDef="let element; index as i"> {{keyArray[i]}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="jobTitle" style="margin-left: 10px">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Job Title">
+        Job Title
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.jobTitle}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="listingTitle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Listing Title">
+        Listing Title
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.listingTitle}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="appDeadline">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Deadline">
+        Deadline
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.appDeadline}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="numApp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Number of Applicants">
+        Number of Applications
+      </th>
+      <td mat-cell *matCellDef="let element; index as i" style="text-align: center"> {{applicantNumber[i]}} </td>
+    </ng-container>
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Number of Applicants">
+
+      </th>
+      <td mat-cell *matCellDef="let element; index as i"> <button mat-stroked-button (click)="openCandidateList(i)">VIEW</button></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row [ngClass]="{'late': convertToDate(row.appDeadline) < convertToDate(currentDate), 'relevant': convertToDate(row.appDeadline)>convertToDate(currentDate), 'rolling': row.wStatus=='rolling'}" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</div>

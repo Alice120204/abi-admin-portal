@@ -1,0 +1,14 @@
+<div class="form-box">
+  <h2>Log in to ABI Admin Portal</h2>
+  <form [formGroup]="authForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput [formControl]="inputEmail" formControlName="inputEmail">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formControl]="inputPassword" formControlName="inputPassword">
+    </mat-form-field>
+    <button mat-raised-button (click)="logIn()" color="primary" [disabled]="!authForm.valid" >LOGIN</button>
+  </form>
+</div>

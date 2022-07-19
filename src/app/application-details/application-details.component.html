@@ -1,0 +1,38 @@
+<h1 mat-dialog-header><b>{{data.data.Name}}'s Application</b></h1>
+<div class="content" mat-dialog-content>
+  <div class="standard-fields">
+    <h2><b>General Information</b></h2>
+    <mat-divider></mat-divider>
+    <ul>
+      <li><b>Affiliation: </b>{{data.data.Affiliation}}</li>
+      <li><b>Email: </b><a href="mailto:{{data.data.Email}}">{{data.data.Email}}</a></li>
+      <li><b>Phone: </b>{{data.data.Phone}}</li>
+    </ul>
+    <div class="buttons" style="display: flex;">
+      <div class="action-button">
+        <a href="{{cvUrl}}" download target="_blank">
+          <button mat-flat-button>Download CV</button>
+        </a>
+      </div>
+      <div class="action-button" *ngIf="letterUrl!='k'">
+        <a href="{{letterUrl}}" download target="_blank">
+          <button mat-flat-button>Download Reference Letter</button>
+        </a>
+      </div>
+    </div>
+
+  </div>
+  <br>
+  <div class="question-responses">
+    <br>
+    <h2><b>Question Responses</b></h2>
+    <mat-divider></mat-divider>
+    <div class="question-response" *ngFor="let key of keys">
+      <h3 *ngIf="data.data[key] && data.data[key]!=cvUrl && data.data[key]!=data.data.Name"><b>{{questions[key]}}</b></h3>
+      <p *ngIf="data.data[key] && data.data[key]!=cvUrl && data.data[key]!=data.data.Name">{{data.data[key]}}</p>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="close()" class="close">Close</button>
+</div>
